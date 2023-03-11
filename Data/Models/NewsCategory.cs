@@ -13,7 +13,5 @@ namespace OnlineNewsPaper.Data.Models
         public IEnumerable<NewsAd> NewsAds { get; set; } = new List<NewsAd>();
 
         public IEnumerable<SpecificCategory> SpecificCategories { get; set; } = new List<SpecificCategory>();
-
-
     }
 }

@@ -10,6 +10,10 @@
 
         public int Likes { get; set; }
 
+        public int NewsAdId { get; set; }
+
+        public NewsAd NewsAd { get; set; }
+
         public int ApplicationUserId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }

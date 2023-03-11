@@ -24,6 +24,10 @@ namespace OnlineNewsPaper.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<NewsAd>().HasOne(x => x.NewsCategory).WithMany(c => c.NewsAds).HasForeignKey(c => c.NewsCategoryId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<NewsAd>().HasOne(x => x.SpecificCategory).WithMany(s => s.NewsAds).HasForeignKey(c => c.SpecificCategoryId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<NewsAd>().HasMany(c => c.Comments).WithOne(c => c.NewsAd).HasForeignKey(c => c.NewsAdId).OnDelete(DeleteBehavior.Restrict);
+
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(builder);

@@ -1,4 +1,6 @@
-﻿namespace OnlineNewsPaper.Data.Models
+﻿using Humanizer;
+
+namespace OnlineNewsPaper.Data.Models
 {
     public class NewsAd
     {
@@ -10,7 +12,7 @@
 
         public NewsCategory NewsCategory { get; set; }
 
-        public int SpecifictCategoryId { get; set; }
+        public int SpecificCategoryId { get; set; }
 
         public SpecificCategory SpecificCategory { get; set; }
 
@@ -26,10 +28,10 @@
 
         public int Views { get; set; }
 
-        public Comment Comment { get; set; }
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
         public string Description { get; set; }
 
-        public string Image { get; set; }
+        public string ImageURL { get; set; }
     }
 }
