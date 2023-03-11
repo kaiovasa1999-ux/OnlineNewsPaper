@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineNewsPaper.Data;
 using OnlineNewsPaper.DatabasePreparor;
-using static OnlineNewsPaper.DatabasePreparor.DataPreparor;
 
 var builder = WebApplication.CreateBuilder(args);
 
