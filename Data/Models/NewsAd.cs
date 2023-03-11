@@ -16,9 +16,9 @@ namespace OnlineNewsPaper.Data.Models
 
         public SpecificCategory SpecificCategory { get; set; }
 
-        public string ClientId { get; set; }
+        public int ApplicationUserId { get; set; }
 
-        public ApplicationUser Client { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
         public DateTime CDate { get; set; }
 
@@ -32,6 +32,6 @@ namespace OnlineNewsPaper.Data.Models
 
         public string Description { get; set; }
 
-        public string ImageURL { get; set; }
+        public ICollection<Image> Images { get; set; }
     }
 }

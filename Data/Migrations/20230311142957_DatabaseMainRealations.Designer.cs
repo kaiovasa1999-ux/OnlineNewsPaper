@@ -12,7 +12,7 @@ using OnlineNewsPaper.Data;
 namespace OnlineNewsPaper.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230311135738_DatabaseMainRealations")]
+    [Migration("20230311142957_DatabaseMainRealations")]
     partial class DatabaseMainRealations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -295,6 +295,30 @@ namespace OnlineNewsPaper.Data.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("OnlineNewsPaper.Data.Models.Image", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ApplicationUserID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Extension")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NewsAdId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserID");
+
+                    b.HasIndex("NewsAdId");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("OnlineNewsPaper.Data.Models.NewsAd", b =>
                 {
                     b.Property<int>("Id")
@@ -303,15 +327,11 @@ namespace OnlineNewsPaper.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("ClientId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ClientId1")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -319,10 +339,6 @@ namespace OnlineNewsPaper.Data.Migrations
 
                     b.Property<int>("Dislike")
                         .HasColumnType("int");
-
-                    b.Property<string>("ImageURL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Likes")
                         .HasColumnType("int");
@@ -342,7 +358,7 @@ namespace OnlineNewsPaper.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId1");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("NewsCategoryId");
 
@@ -482,11 +498,30 @@ namespace OnlineNewsPaper.Data.Migrations
                     b.Navigation("NewsAd");
                 });
 
+            modelBuilder.Entity("OnlineNewsPaper.Data.Models.Image", b =>
+                {
+                    b.HasOne("OnlineNewsPaper.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineNewsPaper.Data.Models.NewsAd", "NewsAd")
+                        .WithMany("Images")
+                        .HasForeignKey("NewsAdId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("NewsAd");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("OnlineNewsPaper.Data.Models.NewsAd", b =>
                 {
-                    b.HasOne("OnlineNewsPaper.Data.Models.ApplicationUser", "Client")
+                    b.HasOne("OnlineNewsPaper.Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("NewsAds")
-                        .HasForeignKey("ClientId1")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -502,7 +537,7 @@ namespace OnlineNewsPaper.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Client");
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("NewsCategory");
 
@@ -530,6 +565,8 @@ namespace OnlineNewsPaper.Data.Migrations
             modelBuilder.Entity("OnlineNewsPaper.Data.Models.NewsAd", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("OnlineNewsPaper.Data.Models.NewsCategory", b =>

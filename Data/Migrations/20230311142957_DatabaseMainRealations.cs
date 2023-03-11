@@ -81,21 +81,19 @@ namespace OnlineNewsPaper.Data.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NewsCategoryId = table.Column<int>(type: "int", nullable: false),
                     SpecificCategoryId = table.Column<int>(type: "int", nullable: false),
-                    ClientId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClientId1 = table.Column<int>(type: "int", nullable: false),
+                    ApplicationUserId = table.Column<int>(type: "int", nullable: false),
                     CDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Likes = table.Column<int>(type: "int", nullable: false),
                     Dislike = table.Column<int>(type: "int", nullable: false),
                     Views = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_NewsAd", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_NewsAd_ApplicationUsers_ClientId1",
-                        column: x => x.ClientId1,
+                        name: "FK_NewsAd_ApplicationUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "ApplicationUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -142,6 +140,32 @@ namespace OnlineNewsPaper.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ApplicationUserID = table.Column<int>(type: "int", nullable: false),
+                    Extension = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NewsAdId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_ApplicationUsers_ApplicationUserID",
+                        column: x => x.ApplicationUserID,
+                        principalTable: "ApplicationUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Images_NewsAd_NewsAdId",
+                        column: x => x.NewsAdId,
+                        principalTable: "NewsAd",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ApplicationUsers_UserId",
                 table: "ApplicationUsers",
@@ -159,9 +183,19 @@ namespace OnlineNewsPaper.Data.Migrations
                 column: "NewsAdId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NewsAd_ClientId1",
+                name: "IX_Images_ApplicationUserID",
+                table: "Images",
+                column: "ApplicationUserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Images_NewsAdId",
+                table: "Images",
+                column: "NewsAdId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NewsAd_ApplicationUserId",
                 table: "NewsAd",
-                column: "ClientId1");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NewsAd_NewsCategoryId",
@@ -183,6 +217,9 @@ namespace OnlineNewsPaper.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "NewsAd");
