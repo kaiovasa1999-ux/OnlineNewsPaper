@@ -4,10 +4,8 @@ namespace OnlineNewsPaper.Models.Home
 {
     public class IndexViewModel
     {
-
         [Display(Name = "Articles")]
         public int NewsAdCount { get; set; }
-
 
         [Display(Name = "Total Categories")]
         public int CategoriesCount { get; set; }
@@ -17,6 +15,5 @@ namespace OnlineNewsPaper.Models.Home
 
         [Display(Name = "Total Coments")]
         public int TotalComments { get; set; }
-
     }
 }

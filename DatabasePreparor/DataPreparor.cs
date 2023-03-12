@@ -125,6 +125,5 @@ namespace OnlineNewsPaper.DatabasePreparor
 
             db.SaveChanges();
         }
-
     }
 }

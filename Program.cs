@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using OnlineNewsPaper.Data;
 using OnlineNewsPaper.DatabasePreparor;
 using OnlineNewsPaper.Services.Home;
+using OnlineNewsPaper.Services.News;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -16,7 +18,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IHomeService, HomeService>();
-
+builder.Services.AddTransient<INewsAdService, NewsAdService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
