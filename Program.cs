@@ -29,7 +29,7 @@ else
     app.UseHsts();
 }
 
-app.Preparo(); //migrate Database befroe execute!
+app.Preparor(); //migrate Database befroe execute!
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

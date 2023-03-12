@@ -24,6 +24,8 @@ namespace OnlineNewsPaper.Data
 
         public DbSet<Image> Images { get; set; }
 
+        public DbSet<NewsAdViaCategory> NewsAdViaCategories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<NewsAd>().HasOne(x => x.NewsCategory).WithMany(c => c.NewsAds).HasForeignKey(c => c.NewsCategoryId).OnDelete(DeleteBehavior.Restrict);
