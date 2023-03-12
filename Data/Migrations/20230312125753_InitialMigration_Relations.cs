@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OnlineNewsPaper.Data.Migrations
 {
-    public partial class DatabaseMainRealations : Migration
+    public partial class InitialMigration_Relations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -166,6 +166,32 @@ namespace OnlineNewsPaper.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "NewsAdViaCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NewsAdID = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NewsAdViaCategories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NewsAdViaCategories_NewsAd_NewsAdID",
+                        column: x => x.NewsAdID,
+                        principalTable: "NewsAd",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NewsAdViaCategories_NewsCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "NewsCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ApplicationUsers_UserId",
                 table: "ApplicationUsers",
@@ -208,6 +234,16 @@ namespace OnlineNewsPaper.Data.Migrations
                 column: "SpecificCategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_NewsAdViaCategories_CategoryId",
+                table: "NewsAdViaCategories",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NewsAdViaCategories_NewsAdID",
+                table: "NewsAdViaCategories",
+                column: "NewsAdID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SpecificCategories_NewsCategoryId",
                 table: "SpecificCategories",
                 column: "NewsCategoryId");
@@ -220,6 +256,9 @@ namespace OnlineNewsPaper.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Images");
+
+            migrationBuilder.DropTable(
+                name: "NewsAdViaCategories");
 
             migrationBuilder.DropTable(
                 name: "NewsAd");

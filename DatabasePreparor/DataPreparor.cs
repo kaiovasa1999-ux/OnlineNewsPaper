@@ -20,7 +20,7 @@ namespace OnlineNewsPaper.DatabasePreparor
 
             db.Database.Migrate();
 
-            if (!db.NewsAdViaCategories.Any())
+            if (!db.NewsCategories.Any())
             {
                 DataSeeder(db);
             }

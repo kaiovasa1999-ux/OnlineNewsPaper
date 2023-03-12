@@ -19,10 +19,12 @@ namespace OnlineNewsPaper.Controllers
         {
             var newsAds = _db.NewsAd.ToList();
             int totalviews = 0;
+            int totalComments = 0;
 
             foreach (var item in newsAds)
             {
                 totalviews += item.Views;
+                totalComments += item.Comments.Count();
             }
 
             var viewModel = new IndexViewModel

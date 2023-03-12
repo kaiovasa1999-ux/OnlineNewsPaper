@@ -12,8 +12,8 @@ using OnlineNewsPaper.Data;
 namespace OnlineNewsPaper.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230311160639_MappingTable")]
-    partial class MappingTable
+    [Migration("20230312125753_InitialMigration_Relations")]
+    partial class InitialMigration_Relations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -15,5 +15,8 @@ namespace OnlineNewsPaper.Models.Home
         [Display(Name = "Total Views")]
         public int TotalViews { get; set; }
 
+        [Display(Name = "Total Coments")]
+        public int TotalComents { get; set; }
+
     }
 }

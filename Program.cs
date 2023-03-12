@@ -29,7 +29,8 @@ else
     app.UseHsts();
 }
 
-app.Preparor(); //migrate Database befroe execute!
+//migrate and seed news categories Database befroe execute!
+app.Preparor(); 
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
