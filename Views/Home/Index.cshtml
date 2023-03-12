@@ -9,11 +9,13 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>We Have:</p>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">Articles: @Model.NewsAdCount</li>
-        <li class="list-group-item">Total Categories: @Model.CategoriesCount</li>
-        <li class="list-group-item">Total Views: @Model.TotalViews</li>
-        <li class="list-group-item">Total Coments: @Model.TotalComents</li>
-    </ul>
+    <div class="col-md-4 offset-md-4">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-info">Articles: @Model.NewsAdCount</li>
+            <li class="list-group-item bg-info">Total Categories: @Model.CategoriesCount</li>
+            <li class="list-group-item bg-info">Total Views: @Model.TotalViews</li>
+            <li class="list-group-item bg-info">Total Coments: @Model.TotalComments</li>
+        </ul>
+    </div>
 </div>
 

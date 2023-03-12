@@ -3,38 +3,25 @@ using Microsoft.EntityFrameworkCore;
 using OnlineNewsPaper.Data;
 using OnlineNewsPaper.Models;
 using OnlineNewsPaper.Models.Home;
+using OnlineNewsPaper.Services.Home;
 using System.Diagnostics;
 
 namespace OnlineNewsPaper.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public HomeController(ApplicationDbContext db)
+        private readonly IHomeService _homeService;
+
+        public HomeController(IHomeService homeService)
         {
-            this._db = db;
+            this._homeService = homeService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(IndexViewModel view)
         {
-            var newsAds = _db.NewsAd.ToList();
-            int totalviews = 0;
-            int totalComments = 0;
-
-            foreach (var item in newsAds)
-            {
-                totalviews += item.Views;
-                totalComments += item.Comments.Count();
-            }
-
-            var viewModel = new IndexViewModel
-            {
-                CategoriesCount = _db.NewsCategories.Count() + _db.SpecificCategories.Count(),
-                TotalViews = totalviews,
-                NewsAdCount = _db.NewsAd.Count(),
-            };
-
-            return View(viewModel);
+            var result = await _homeService.GetStatisticsData(view);
+            return View(result);
         }
 
         public IActionResult Privacy()
