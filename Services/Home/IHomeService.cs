@@ -1,9 +1,10 @@
 ﻿using OnlineNewsPaper.Models.Home;
+using OnlineNewsPaper.Services.DTOs;
 
 namespace OnlineNewsPaper.Services.Home
 {
     public interface IHomeService
     {
-        public Task<IndexViewModel> GetStatisticsData(IndexViewModel indexViewModel);
+        public Task<IndexViewModelDTO> GetStatisticsData();
     }
 }

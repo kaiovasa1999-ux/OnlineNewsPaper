@@ -17,11 +17,18 @@ namespace OnlineNewsPaper.Controllers
             this._homeService = homeService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index(IndexViewModel view)
+        public async Task<IActionResult> Index()
         {
-            var result = await _homeService.GetStatisticsData(view);
-            return View(result);
+            var viewResult = await _homeService.GetStatisticsData();
+
+            var viewModel = new IndexViewModel
+            {
+                CategoriesCount = viewResult.CategoriesCount,
+                TotalComments = viewResult.TotalComments,
+                TotalViews = viewResult.TotalViews,
+                NewsAdCount = viewResult.NewsAdCount,
+            };
+            return View(viewModel);
         }
 
         public IActionResult Privacy()
