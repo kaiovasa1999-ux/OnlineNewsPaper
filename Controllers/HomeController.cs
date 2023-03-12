@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using OnlineNewsPaper.Data;
 using OnlineNewsPaper.Models;
 using OnlineNewsPaper.Models.Home;
@@ -10,24 +12,20 @@ namespace OnlineNewsPaper.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IHomeService _homeService;
+        private readonly IHomeService homeService;
+        private readonly IMapper mapper;
 
-        public HomeController(IHomeService homeService)
+        public HomeController(IHomeService homeService,IMapper mapper)
         {
-            this._homeService = homeService;
+            this.homeService = homeService;
+            this.mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
-            var viewResult = await _homeService.GetStatisticsData();
+            var viewResult = await this.homeService.GetStatisticsData();
 
-            var viewModel = new IndexViewModel
-            {
-                CategoriesCount = viewResult.CategoriesCount,
-                TotalComments = viewResult.TotalComments,
-                TotalViews = viewResult.TotalViews,
-                NewsAdCount = viewResult.NewsAdCount,
-            };
+            var viewModel = mapper.Map<IndexViewModel>(viewResult);
             return View(viewModel);
         }
 
