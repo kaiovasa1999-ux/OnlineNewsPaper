@@ -7,5 +7,8 @@ namespace OnlineNewsPaper.Services.News
     public interface INewsAdService
     {
         public Task<CreateNewsAdInputModel> GetNewsCategories();
+
+        public Task<ICollection<SpecificCategory>> GetSpecficCategoires(int mainCategoryId);
+        
     }
 }

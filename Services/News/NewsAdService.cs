@@ -19,13 +19,16 @@ namespace OnlineNewsPaper.Services.News
         {
             CreateNewsAdInputModel inputModel = new CreateNewsAdInputModel();
             var categories = await db.NewsCategories.ToListAsync();
-
             inputModel.NewsCategories = categories;
             inputModel.Title = "";
             inputModel.Description = "";
 
             return inputModel;
         }
-       
+
+        public async Task<ICollection<SpecificCategory>> GetSpecficCategoires(int mainCategoryId)
+        {
+           return await db.SpecificCategories.Where(c => c.NewsCategoryId == mainCategoryId).ToListAsync();
+        }
     }
 }

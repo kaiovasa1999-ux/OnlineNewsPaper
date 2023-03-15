@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineNewsPaper.Data;
 using OnlineNewsPaper.Models.News;
 using OnlineNewsPaper.Services.News;
+using System.Web;
+using Newtonsoft.Json;
 
 namespace OnlineNewsPaper.Controllers
 {
@@ -36,6 +37,14 @@ namespace OnlineNewsPaper.Controllers
             //add via service method (crete service)
             //TODO: Save data
             return this.RedirectToAction("/");
+        }
+
+
+        public async Task<JsonResult> GetSpecificCategories(int mainCategorId)
+        {
+            var ListCategories = await service.GetSpecficCategoires(mainCategorId);
+            var json = JsonConvert.SerializeObject(ListCategories);
+            return Json(json);
         }
     }
 }

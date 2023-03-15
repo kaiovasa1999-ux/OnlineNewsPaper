@@ -18,11 +18,16 @@ namespace OnlineNewsPaper.Models.News
         //[Required]
         //public string Subcategory { get; set; }
 
-        [Display(Name ="Content")]
+        [Display(Name = "Content")]
         [Required]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
-        //public IEnumerable<IFormFile> Images { get; set; }
+        public int SpecificCategoriesId { get; set; }
+
+        [Display(Name ="Subcategory")]
+        public ICollection<SpecificCategory> SpecificCategories { get; set; }
+
+        public IEnumerable<IFormFile> Images { get; set; }
     }
 }
