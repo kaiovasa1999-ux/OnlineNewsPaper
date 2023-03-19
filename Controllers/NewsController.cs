@@ -3,6 +3,8 @@ using OnlineNewsPaper.Models.News;
 using OnlineNewsPaper.Services.News;
 using System.Web;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
+using OnlineNewsPaper.Data.Models;
 
 namespace OnlineNewsPaper.Controllers
 {
@@ -28,6 +30,7 @@ namespace OnlineNewsPaper.Controllers
             return this.View(view);
         }
 
+        [HttpPost]
         public IActionResult Create(CreateNewsAdInputModel inputModel)
         {
             if(!this.ModelState.IsValid)
@@ -39,12 +42,12 @@ namespace OnlineNewsPaper.Controllers
             return this.RedirectToAction("/");
         }
 
-
-        public async Task<JsonResult> GetSpecificCategories(int mainCategorId)
+        [Route("News/Create/GetSpecificCategories/{id:int}")]
+        public JsonResult GetSpecificCategories(int mainCategorId)
         {
-            var ListCategories = await service.GetSpecficCategoires(mainCategorId);
-            var json = JsonConvert.SerializeObject(ListCategories);
-            return Json(json);
+            var items = service.GetSpecficCategoires(mainCategorId);
+            var res = JsonConvert.SerializeObject(items);
+            return Json(res);
         }
     }
 }

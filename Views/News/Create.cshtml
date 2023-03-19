@@ -2,7 +2,9 @@
 
 <h1>Inform the World!</h1>
 <h4 class="text danger">Add you article here</h4>
-
+@{
+    var Id = 0;
+}
 
 <form method="post" enctype="multipart/form-data">
     <div class="form-group">
@@ -12,11 +14,19 @@
     </div>
     <div class="form-group">
         <label asp-for="NewsCategoryId">Article category</label>
-        <select asp-for="NewsCategoryId">
+        <select asp-for="NewsCategoryId" id="NewsCategories">
             @foreach (var newsCategory in Model.NewsCategories)
             {
-                <option value="@newsCategory.Id">@newsCategory.Name</option>
+                <option id="@newsCategory.Id" value="@newsCategory.Id">@newsCategory.Name</option>
+                Id = newsCategory.Id;
             }
+        </select>
+    </div>
+      <div class="form-group">
+        <label asp-for="SpecificCategoriesId">Sub Category</label>
+        <select asp-for="SpecificCategoriesId" id="SpecificCategories">
+         
+           
         </select>
     </div>
      <div class="form-group">
@@ -24,4 +34,45 @@
         <input asp-for="Images" class="form-control">
         <span asp-validation-for="Images" class="text-danger"></span>
     </div>
+     <div class="form-group">
+        <label asp-for="Description">Content</label>
+        <textarea asp-for="Description" class="form-control" class="form-control" placeholder="write here"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
 </form>
+<button onclick="GetData()" class="btn btn-primary">Click</button>
+
+
+<script>
+    const ID = $(document).ready(function() {
+      $('#NewsCategories').change(function() {
+        var selectedOptionId = $(this).children('option:selected').val();
+        console.log(selectedOptionId);
+      });
+    });
+
+    $(document).ready(function () {
+            $('#NewsCategories').change(function () {
+                var NewsCategoriesID = $(this).children(":selected").attr("id");
+
+                $.ajax({
+                    url: '/News/GetSpecficCategoires/' + NewsCategoriesID,
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { id: NewsCategoriesID },
+                    success: function (data) {
+                        var content = '';
+                        $.each(data, function (index, item) {
+                            content += '<p>' + item.Name + '</p>';
+                        });
+                        $('# ').html(content);
+                    },
+                    error: function () {
+                        alert('Error retrieving data.');
+                    }
+                });
+            });
+    });
+
+</script>
+

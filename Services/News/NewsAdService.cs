@@ -26,9 +26,14 @@ namespace OnlineNewsPaper.Services.News
             return inputModel;
         }
 
-        public async Task<ICollection<SpecificCategory>> GetSpecficCategoires(int mainCategoryId)
+        public ICollection<SpecificCategory> GetSpecficCategoires(int mainCategoryId)
         {
-           return await db.SpecificCategories.Where(c => c.NewsCategoryId == mainCategoryId).ToListAsync();
+           return  db.SpecificCategories.Where(c => c.NewsCategoryId == mainCategoryId).Select(x => new SpecificCategory
+           {
+               Id = x.Id,
+               Name = x.Name,
+           }).ToList();
         }
+
     }
 }
