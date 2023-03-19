@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OnlineNewsPaper.Data;
 using OnlineNewsPaper.Data.Models;
 
@@ -37,6 +38,19 @@ namespace OnlineNewsPaper.Controllers.API
             await this.db.SaveChangesAsync();
 
             return this.CreatedAtAction("Get", new { newsCategory.Id }, newsCategory);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var category = await this.db.NewsCategories.FirstOrDefaultAsync(c => c.Id == id);
+            if(category == null)
+            {
+                return NotFound();
+            }
+            this.db.Remove(category); 
+            await this.db.SaveChangesAsync();
+            return NoContent();
         }
     }
 }
