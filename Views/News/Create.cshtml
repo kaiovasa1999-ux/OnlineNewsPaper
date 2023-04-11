@@ -54,18 +54,20 @@
     $(document).ready(function () {
             $('#NewsCategories').change(function () {
                 var NewsCategoriesID = $(this).children(":selected").attr("id");
-
+                console.log(NewsCategoriesID);
                 $.ajax({
-                    url: '/News/GetSpecficCategoires/' + NewsCategoriesID,
+                url: '/News/Create/GetSpecificCategories/'+NewsCategoriesID,
                     type: 'GET',
                     dataType: 'json',
                     data: { id: NewsCategoriesID },
                     success: function (data) {
                         var content = '';
-                        $.each(data, function (index, item) {
-                            content += '<p>' + item.Name + '</p>';
+                        var htmlResult = '<select>' + content + '<select/>'
+                    $.each(JSON.parse(data), function (index, item) {
+                        content += '<option>' + item.Name + '</option>';
+
                         });
-                        $('# ').html(content);
+                    $('#SpecificCategoriesId').append(htmlResult);
                     },
                     error: function () {
                         alert('Error retrieving data.');

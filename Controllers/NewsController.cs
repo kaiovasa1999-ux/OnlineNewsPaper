@@ -42,7 +42,7 @@ namespace OnlineNewsPaper.Controllers
             return this.RedirectToAction("/");
         }
 
-        [Route("News/Create/GetSpecificCategories/{id:int}")]
+        [Route("/News/Create/GetSpecificCategories/{mainCategorId}")]
         public JsonResult GetSpecificCategories(int mainCategorId)
         {
             var items = service.GetSpecficCategoires(mainCategorId);
