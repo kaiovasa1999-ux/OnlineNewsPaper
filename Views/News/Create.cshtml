@@ -62,12 +62,12 @@
                     data: { id: NewsCategoriesID },
                     success: function (data) {
                         var content = '';
-                        var htmlResult = '<select>' + content + '<select/>'
                     $.each(JSON.parse(data), function (index, item) {
+
                         content += '<option>' + item.Name + '</option>';
 
                         });
-                    $('#SpecificCategoriesId').append(htmlResult);
+                    $('#SpecificCategories').html(content);
                     },
                     error: function () {
                         alert('Error retrieving data.');
