@@ -12,22 +12,18 @@
         <input asp-for="Title"  class="form-control"/>
         <span asp-validation-for="Title"></span>
     </div>
-    <div class="form-group">
+    <div class="form-group row-cols-2 col-md-6">
         <label asp-for="NewsCategoryId">Article category</label>
         <select asp-for="NewsCategoryId" id="NewsCategories">
             @foreach (var newsCategory in Model.NewsCategories)
             {
                 <option id="@newsCategory.Id" value="@newsCategory.Id">@newsCategory.Name</option>
-                Id = newsCategory.Id;
             }
         </select>
     </div>
-      <div class="form-group">
+      <div class="form-group row-cols-2 col-md-6">
         <label asp-for="SpecificCategoriesId">Sub Category</label>
-        <select asp-for="SpecificCategoriesId" id="SpecificCategories">
-         
-           
-        </select>
+        <select asp-for="SpecificCategoriesId" id="SpecificCategories" onchange="GetValue()"></select>
     </div>
      <div class="form-group">
         <label asp-for="Images">Image</label>
@@ -39,35 +35,42 @@
         <textarea asp-for="Description" class="form-control" class="form-control" placeholder="write here"></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
+    <button type="submit" class="btn btn-success">Save</button>
 </form>
-<button onclick="GetData()" class="btn btn-primary">Click</button>
+
 
 
 <script>
     const ID = $(document).ready(function() {
       $('#NewsCategories').change(function() {
         var selectedOptionId = $(this).children('option:selected').val();
-        console.log(selectedOptionId);
       });
     });
+    
+    function GetValue() {
+        let selectElement = document.getElementById("SpecificCategories");
+
+        selectElement.addEventListener("change", function () {
+            let selectedValue = selectElement.options[selectElement.selectedIndex].value;
+            console.log(selectedValue);
+        });
+    }
 
     $(document).ready(function () {
             $('#NewsCategories').change(function () {
                 var NewsCategoriesID = $(this).children(":selected").attr("id");
-                console.log(NewsCategoriesID);
                 $.ajax({
-                url: '/News/Create/GetSpecificCategories/'+NewsCategoriesID,
+                url: '/News/Create/RetunSpecificCategoriesAsJSON/' + NewsCategoriesID,
                     type: 'GET',
                     dataType: 'json',
                     data: { id: NewsCategoriesID },
                     success: function (data) {
                         var content = '';
                     $.each(JSON.parse(data), function (index, item) {
-
-                        content += '<option>' + item.Name + '</option>';
-
+                        console.log(item.Id);
+                        content += '<option id="item.id" value="item.id">' + item.Name + '</option>';
                         });
-                    $('#SpecificCategories').html(content);
+                    $('#SpecificCategories').append(content);
                     },
                     error: function () {
                         alert('Error retrieving data.');

@@ -26,14 +26,24 @@ namespace OnlineNewsPaper.Services.News
             return inputModel;
         }
 
-        public ICollection<SpecificCategory> GetSpecficCategoires(int mainCategoryId)
+        public ICollection<SpecificCategoryiesAJAXModel> RetunSpecificCategoriesAsJSON(int mainCategoryId)
         {
-           return  db.SpecificCategories.Where(c => c.NewsCategoryId == mainCategoryId).Select(x => new SpecificCategory
+           return  db.SpecificCategories.Where(c => c.NewsCategoryId == mainCategoryId).Select(x => new SpecificCategoryiesAJAXModel
            {
                Id = x.Id,
+               MainCategoryId = mainCategoryId,
                Name = x.Name,
            }).ToList();
         }
 
+        public ICollection<SpecificCategoryiesAJAXModel> GetSpecificCategories2(int mainCategoryId)
+        {
+            return this.db.SpecificCategories.Where(c => c.NewsCategoryId == mainCategoryId).Select(x => new SpecificCategoryiesAJAXModel()
+            {
+                Id= x.Id,
+                Name = x.Name,
+                MainCategoryId = mainCategoryId
+            }).ToList();
+        }
     }
 }

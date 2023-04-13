@@ -26,7 +26,9 @@ namespace OnlineNewsPaper.Models.News
         public int SpecificCategoriesId { get; set; }
 
         [Display(Name ="Subcategory")]
-        public ICollection<SpecificCategory> SpecificCategories { get; set; }
+        public ICollection<SpecificCategoryiesAJAXModel> SpecificCategories { get; set; }
+
+        public int SpecificCategoryId { get; set; }
 
         public IEnumerable<IFormFile> Images { get; set; }
     }

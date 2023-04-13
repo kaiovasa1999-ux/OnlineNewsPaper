@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineNewsPaper.Models.News;
 using OnlineNewsPaper.Services.News;
-using System.Web;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
-using OnlineNewsPaper.Data.Models;
+
+
 
 namespace OnlineNewsPaper.Controllers
 {
@@ -33,18 +33,21 @@ namespace OnlineNewsPaper.Controllers
         [HttpPost]
         public IActionResult Create(CreateNewsAdInputModel inputModel)
         {
-            if(!this.ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 return this.View(inputModel);
             }
+            inputModel.SpecificCategories = service.GetSpecificCategories2(inputModel.NewsCategoryId);
             //add via service method (crete service)
             //TODO: Save data
             return this.RedirectToAction("/");
         }
 
-        [Route("/News/Create/GetSpecificCategories/{mainCategorId}")]
-        public JsonResult GetSpecificCategories(int mainCategorId)
+
+        [Route("/News/Create/RetunSpecificCategoriesAsJSON/{mainCategorId}")]
+        public JsonResult RetunSpecificCategoriesAsJSON(int mainCategorId)
         {
+            
             var items = service.GetSpecficCategoires(mainCategorId);
             var res = JsonConvert.SerializeObject(items);
             return Json(res);
