@@ -26,7 +26,7 @@ namespace OnlineNewsPaper.Services.News
             return inputModel;
         }
 
-        public ICollection<SpecificCategoryiesAJAXModel> RetunSpecificCategoriesAsJSON(int mainCategoryId)
+        public ICollection<SpecificCategoryiesAJAXModel> RetunSpecificCategoriesJSON(int mainCategoryId)
         {
            return  db.SpecificCategories.Where(c => c.NewsCategoryId == mainCategoryId).Select(x => new SpecificCategoryiesAJAXModel
            {

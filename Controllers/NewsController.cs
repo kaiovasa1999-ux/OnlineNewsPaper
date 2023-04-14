@@ -48,7 +48,7 @@ namespace OnlineNewsPaper.Controllers
         public JsonResult RetunSpecificCategoriesAsJSON(int mainCategorId)
         {
             
-            var items = service.GetSpecficCategoires(mainCategorId);
+            var items = service.RetunSpecificCategoriesJSON(mainCategorId);
             var res = JsonConvert.SerializeObject(items);
             return Json(res);
         }

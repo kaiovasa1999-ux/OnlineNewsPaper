@@ -8,7 +8,7 @@ namespace OnlineNewsPaper.Services.News
     {
         public Task<CreateNewsAdInputModel> GetNewsCategories();
 
-        public ICollection<SpecificCategoryiesAJAXModel> RetunSpecificCategoriesAsJSON(int mainCategoryId);
+        public ICollection<SpecificCategoryiesAJAXModel> RetunSpecificCategoriesJSON(int mainCategoryId);
         
         public ICollection<SpecificCategoryiesAJAXModel> GetSpecificCategories2(int mainCategoryId);
         
