@@ -10,7 +10,9 @@ namespace OnlineNewsPaper.Services.News
 
         public ICollection<SpecificCategoryiesAJAXModel> RetunSpecificCategoriesJSON(int mainCategoryId);
         
-        public ICollection<SpecificCategoryiesAJAXModel> GetSpecificCategories2(int mainCategoryId);
+        public ICollection<SpecificCategoryiesAJAXModel> GetSpecificCategories(int mainCategoryId);
+
+        public ICollection<NewsCategory> GetMainCategories(int id);
         
     }
 }

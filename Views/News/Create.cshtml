@@ -2,9 +2,6 @@
 
 <h1>Inform the World!</h1>
 <h4 class="text danger">Add you article here</h4>
-@{
-    var Id = 0;
-}
 
 <form method="post" enctype="multipart/form-data">
     <div class="form-group">
@@ -22,8 +19,8 @@
         </select>
     </div>
       <div class="form-group row-cols-2 col-md-6">
-        <label asp-for="SpecificCategoriesId">Sub Category</label>
-        <select asp-for="SpecificCategoriesId" id="SpecificCategories" onchange="GetValue()"></select>
+        <label asp-for="SpecificCategoryId">Sub Category</label>
+        <select asp-for="SpecificCategoryId" id="SpecificCategories" onchange="GetValue()"></select>
     </div>
      <div class="form-group">
         <label asp-for="Images">Image</label>
@@ -48,12 +45,11 @@
     });
     
     function GetValue() {
-        let selectElement = document.getElementById("SpecificCategories");
+        const selectElement = document.getElementById("mySelect");
 
         selectElement.addEventListener("change", function () {
-            let selectedValue = selectElement.options[selectElement.selectedIndex].value;
-            console.log(selectedValue);
-        });
+            const selectedOptionId = this.options[this.selectedIndex].id;
+            console.log(selectedOptionId);
     }
 
     $(document).ready(function () {

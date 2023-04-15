@@ -15,15 +15,10 @@ namespace OnlineNewsPaper.Models.News
         [Required]
         public ICollection<NewsCategory> NewsCategories { get; set; }
 
-        //[Required]
-        //public string Subcategory { get; set; }
-
         [Display(Name = "Content")]
         [Required]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
-
-        public int SpecificCategoriesId { get; set; }
 
         [Display(Name ="Subcategory")]
         public ICollection<SpecificCategoryiesAJAXModel> SpecificCategories { get; set; }

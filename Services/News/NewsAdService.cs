@@ -36,7 +36,7 @@ namespace OnlineNewsPaper.Services.News
            }).ToList();
         }
 
-        public ICollection<SpecificCategoryiesAJAXModel> GetSpecificCategories2(int mainCategoryId)
+        public ICollection<SpecificCategoryiesAJAXModel> GetSpecificCategories(int mainCategoryId)
         {
             return this.db.SpecificCategories.Where(c => c.NewsCategoryId == mainCategoryId).Select(x => new SpecificCategoryiesAJAXModel()
             {
@@ -44,6 +44,11 @@ namespace OnlineNewsPaper.Services.News
                 Name = x.Name,
                 MainCategoryId = mainCategoryId
             }).ToList();
+        }
+
+        public ICollection<NewsCategory> GetMainCategories(int id)
+        {
+            return this.db.NewsCategories.Where(c => c.Id == id).ToList();
         }
     }
 }

@@ -10,6 +10,7 @@ namespace OnlineNewsPaper.Controllers
 {
     public class NewsController : Controller
     {
+        private const int DefaultCategoryId = 1;
         private readonly INewsAdService service;
         public NewsController(INewsAdService service)
         {
@@ -25,6 +26,8 @@ namespace OnlineNewsPaper.Controllers
                 Title = data.Title,
                 Description = data.Description,
                 NewsCategories = data.NewsCategories,
+                NewsCategoryId = DefaultCategoryId,
+                SpecificCategories = service.GetSpecificCategories(DefaultCategoryId),
             };
 
             return this.View(view);
@@ -33,11 +36,14 @@ namespace OnlineNewsPaper.Controllers
         [HttpPost]
         public IActionResult Create(CreateNewsAdInputModel inputModel)
         {
+            inputModel.NewsCategories = service.GetMainCategories(inputModel.NewsCategoryId);
+            inputModel.SpecificCategories = service.GetSpecificCategories(inputModel.NewsCategoryId);
+
             if (!this.ModelState.IsValid)
             {
                 return this.View(inputModel);
             }
-            inputModel.SpecificCategories = service.GetSpecificCategories2(inputModel.NewsCategoryId);
+            
             //add via service method (crete service)
             //TODO: Save data
             return this.RedirectToAction("/");
