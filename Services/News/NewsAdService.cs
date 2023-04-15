@@ -35,22 +35,22 @@ namespace OnlineNewsPaper.Services.News
            }).ToList();
         }
 
-        public ICollection<SpecificCategory> GetSpecificCategories(int mainCategoryId)
+        public async Task<ICollection<SpecificCategory>> GetSpecificCategories(int mainCategoryId)
         {
-            return this.db.SpecificCategories.Where(c => c.NewsCategoryId == mainCategoryId).Select(x => new SpecificCategory()
+            return await this.db.SpecificCategories.Where(c => c.NewsCategoryId == mainCategoryId).Select(x => new SpecificCategory()
             {
                 Id= x.Id,
                 Name = x.Name,
                 NewsCategoryId = mainCategoryId
-            }).ToList();
+            }).ToListAsync();
         }
 
-        public ICollection<NewsCategory> GetMainCategories(int id)
+        public async Task<ICollection<NewsCategory>> GetMainCategories(int id)
         {
-            return this.db.NewsCategories.Where(c => c.Id == id).ToList();
+            return await this.db.NewsCategories.Where(c => c.Id == id).ToListAsync();
         }
 
-        public void Cretae(CreateNewsAdInputModel inputModel)
+        public async Task CretaeAsync(CreateNewsAdInputModel inputModel)
         {
             var adImage = new OnlineNewsPaper.Data.Models.Image();
             var ad = new NewsAd();
@@ -69,7 +69,8 @@ namespace OnlineNewsPaper.Services.News
                 ad.Images.Add(adImage);
             }
 
-            this.db.NewsAd.Add(ad);
+            await this.db.NewsAd.AddAsync(ad);
+            await this.db.SaveChangesAsync();
         }
     }
 }

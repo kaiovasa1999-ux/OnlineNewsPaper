@@ -10,11 +10,11 @@ namespace OnlineNewsPaper.Services.News
 
         public ICollection<SpecificCategory> RetunSpecificCategoriesJSON(int mainCategoryId);
         
-        public ICollection<SpecificCategory> GetSpecificCategories(int mainCategoryId);
+        public Task<ICollection<SpecificCategory>> GetSpecificCategories(int mainCategoryId);
 
-        public ICollection<NewsCategory> GetMainCategories(int id);
+        public Task<ICollection<NewsCategory>> GetMainCategories(int id);
 
-        public void Cretae(CreateNewsAdInputModel inputModel);
+        public void CretaeAsync(CreateNewsAdInputModel inputModel);
         
     }
 }
