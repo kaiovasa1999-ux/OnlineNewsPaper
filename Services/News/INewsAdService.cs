@@ -8,11 +8,13 @@ namespace OnlineNewsPaper.Services.News
     {
         public Task<CreateNewsAdInputModel> GetNewsCategories();
 
-        public ICollection<SpecificCategoryiesAJAXModel> RetunSpecificCategoriesJSON(int mainCategoryId);
+        public ICollection<SpecificCategory> RetunSpecificCategoriesJSON(int mainCategoryId);
         
-        public ICollection<SpecificCategoryiesAJAXModel> GetSpecificCategories(int mainCategoryId);
+        public ICollection<SpecificCategory> GetSpecificCategories(int mainCategoryId);
 
         public ICollection<NewsCategory> GetMainCategories(int id);
+
+        public void Cretae(CreateNewsAdInputModel inputModel);
         
     }
 }

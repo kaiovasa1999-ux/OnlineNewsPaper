@@ -20,35 +20,48 @@ namespace OnlineNewsPaper.Services.News
             CreateNewsAdInputModel inputModel = new CreateNewsAdInputModel();
             var categories = await db.NewsCategories.ToListAsync();
             inputModel.NewsCategories = categories;
-            inputModel.Title = "";
-            inputModel.Description = "";
 
             return inputModel;
         }
 
-        public ICollection<SpecificCategoryiesAJAXModel> RetunSpecificCategoriesJSON(int mainCategoryId)
+        public ICollection<SpecificCategory> RetunSpecificCategoriesJSON(int mainCategoryId)
         {
-           return  db.SpecificCategories.Where(c => c.NewsCategoryId == mainCategoryId).Select(x => new SpecificCategoryiesAJAXModel
+           return  db.SpecificCategories.Where(c => c.NewsCategoryId == mainCategoryId).Select(x => new SpecificCategory
            {
                Id = x.Id,
-               MainCategoryId = mainCategoryId,
+               NewsCategoryId = mainCategoryId,
                Name = x.Name,
            }).ToList();
         }
 
-        public ICollection<SpecificCategoryiesAJAXModel> GetSpecificCategories(int mainCategoryId)
+        public ICollection<SpecificCategory> GetSpecificCategories(int mainCategoryId)
         {
-            return this.db.SpecificCategories.Where(c => c.NewsCategoryId == mainCategoryId).Select(x => new SpecificCategoryiesAJAXModel()
+            return this.db.SpecificCategories.Where(c => c.NewsCategoryId == mainCategoryId).Select(x => new SpecificCategory()
             {
                 Id= x.Id,
                 Name = x.Name,
-                MainCategoryId = mainCategoryId
+                NewsCategoryId = mainCategoryId
             }).ToList();
         }
 
         public ICollection<NewsCategory> GetMainCategories(int id)
         {
             return this.db.NewsCategories.Where(c => c.Id == id).ToList();
+        }
+
+        public void Cretae(CreateNewsAdInputModel inputModel)
+        {
+            var ad = new NewsAd();
+            ad.CDate = DateTime.Now;
+            ad.Title = inputModel.Title;
+            ad.Description = inputModel.Description;
+            ad.NewsCategoryId = inputModel.NewsCategoryId;
+            ad.SpecificCategoryId = inputModel.SpecificCategoryId;
+            ad.Views = 0;
+            ad.Comments = new List<Comment>();
+
+
+            this.db.NewsAd.Add(ad);
         }
     }
 }

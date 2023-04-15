@@ -58,7 +58,7 @@
         $("#NewsCategories").change(function () {
             var NewsCategoriesID = $(this).children(":selected").attr("id");
             $.ajax({
-                url: '/News/Create/RetunSpecificCategoriesAsJSON/' + NewsCategoriesID,
+                url: '/News/Create/GetSpecificCategoriesJSON/' + NewsCategoriesID,
                 type: "GET",
                 data: { id: NewsCategoriesID },
                 dataType: "json",

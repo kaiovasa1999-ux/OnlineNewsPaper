@@ -14,7 +14,7 @@ namespace OnlineNewsPaper.Models.News
 
         public string Description { get; set; }
 
-        public ICollection<SpecificCategoryiesAJAXModel> SpecificCategories { get; set; }
+        public ICollection<SpecificCategory> SpecificCategories { get; set; }
 
         public int SpecificCategoryId { get; set; }
 

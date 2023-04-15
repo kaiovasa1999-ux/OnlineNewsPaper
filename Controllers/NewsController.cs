@@ -21,37 +21,27 @@ namespace OnlineNewsPaper.Controllers
         public async Task<IActionResult> Create()
         {
             var data = await service.GetNewsCategories();
-            var view = new CreateNewsAdInputModel()
-            {
-                Title = data.Title,
-                Description = data.Description,
-                NewsCategories = data.NewsCategories,
-                NewsCategoryId = DefaultCategoryId,
-                SpecificCategories = service.GetSpecificCategories(DefaultCategoryId),
-            };
+            var viewModel = new CreateNewsAdInputModel();
+            viewModel.NewsCategories = data.NewsCategories;
+            viewModel.SpecificCategories = service.GetSpecificCategories(DefaultCategoryId);
 
-            return this.View(view);
+            return this.View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Create(CreateNewsAdInputModel inputModel)
+        public async Task<IActionResult> Create(CreateNewsAdInputModel inputModel)
         {
-            inputModel.NewsCategories = service.GetMainCategories(inputModel.NewsCategoryId);
-            inputModel.SpecificCategories = service.GetSpecificCategories(inputModel.NewsCategoryId);
-
             if (!this.ModelState.IsValid)
             {
+                inputModel.NewsCategories = this.service.GetMainCategories(inputModel.NewsCategoryId);
+                inputModel.SpecificCategories = this.service.GetSpecificCategories(inputModel.SpecificCategoryId);
                 return this.View(inputModel);
             }
-
-            //add via service method (crete service)
-            //TODO: Save data
             return RedirectToAction("Index", "Home");
         }
 
-
-        [Route("/News/Create/RetunSpecificCategoriesAsJSON/{mainCategorId}")]
-        public JsonResult RetunSpecificCategoriesAsJSON(int mainCategorId)
+        [Route("/News/Create/GetSpecificCategoriesJSON/{mainCategorId}")]
+        public JsonResult GetSpecificCategoriesJSON(int mainCategorId)
         {
             
             var items = service.RetunSpecificCategoriesJSON(mainCategorId);
