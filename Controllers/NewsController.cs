@@ -43,10 +43,10 @@ namespace OnlineNewsPaper.Controllers
             {
                 return this.View(inputModel);
             }
-            
+
             //add via service method (crete service)
             //TODO: Save data
-            return this.RedirectToAction("/");
+            return RedirectToAction("Index", "Home");
         }
 
 

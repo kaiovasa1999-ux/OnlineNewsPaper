@@ -45,35 +45,63 @@
     });
     
     function GetValue() {
-        const selectElement = document.getElementById("mySelect");
+        const selectElement = document.getElementById("SpecificCategories");
 
         selectElement.addEventListener("change", function () {
-            const selectedOptionId = this.options[this.selectedIndex].id;
-            console.log(selectedOptionId);
+            const selectedOptionValue = this.value;
+            console.log(selectedOptionValue);
+        });
+
     }
 
     $(document).ready(function () {
-            $('#NewsCategories').change(function () {
-                var NewsCategoriesID = $(this).children(":selected").attr("id");
-                $.ajax({
+        $("#NewsCategories").change(function () {
+            var NewsCategoriesID = $(this).children(":selected").attr("id");
+            $.ajax({
                 url: '/News/Create/RetunSpecificCategoriesAsJSON/' + NewsCategoriesID,
-                    type: 'GET',
-                    dataType: 'json',
-                    data: { id: NewsCategoriesID },
-                    success: function (data) {
-                        var content = '';
-                    $.each(JSON.parse(data), function (index, item) {
-                        console.log(item.Id);
-                        content += '<option id="item.id" value="item.id">' + item.Name + '</option>';
-                        });
-                    $('#SpecificCategories').append(content);
-                    },
-                    error: function () {
-                        alert('Error retrieving data.');
-                    }
-                });
+                type: "GET",
+                data: { id: NewsCategoriesID },
+                dataType: "json",
+                success: function (subcategories) {
+                    var subcategorySelect = $("#SpecificCategories");
+                    subcategorySelect.empty();
+                    $.each(JSON.parse(subcategories), function (index, subcategory) {
+                        subcategorySelect.append(
+                            $("<option>")
+                                .attr("value", subcategory.Id)
+                                .text(subcategory.Name)
+                        );
+                    });
+                },
+                error: function () {
+                    alert('Error retrieving data.');
+                }
             });
+        });
     });
+
+    //$(document).ready(function () {
+    //    $('#NewsCategories').change(function () {
+    //        var NewsCategoriesID = $(this).children(":selected").attr("id");
+    //        $.ajax({
+    //            url: '/News/Create/RetunSpecificCategoriesAsJSON/' + NewsCategoriesID,
+    //            type: 'GET',
+    //            dataType: 'json',
+    //            data: { id: NewsCategoriesID },
+    //            success: function (data) {
+    //                var content = '';
+    //                $.each(JSON.parse(data), function (index, item) {
+    //                    content += '<option id="item.id" value="item.id">' + item.Name + '</option>';
+    //                });
+    //                $('#SpecificCategories').append(content);
+    //            },
+    //            error: function () {
+    //                alert('Error retrieving data.');
+    //            }
+    //        });
+    //    });
+    //});
+    //});
 
 </script>
 
