@@ -52,22 +52,22 @@ namespace OnlineNewsPaper.Services.News
 
         public void Cretae(CreateNewsAdInputModel inputModel)
         {
-         
+            var adImage = new OnlineNewsPaper.Data.Models.Image();
             var ad = new NewsAd();
+
             ad.CDate = DateTime.Now;
             ad.Title = inputModel.Title;
             ad.Description = inputModel.Description;
             ad.NewsCategoryId = inputModel.NewsCategoryId;
             ad.SpecificCategoryId = inputModel.SpecificCategoryId;
-            ad.Views = 0;
             ad.Comments = new List<Comment>();
             foreach (var img in inputModel.Images)
             {
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(img.FileName);
-                //ad.Images.Add
+                var fileIdAndName = Guid.NewGuid().ToString() + '/' + Path.GetExtension(img.FileName);
+                adImage.Id = fileIdAndName;
+                adImage.NewsAdId = ad.Id;
+                ad.Images.Add(adImage);
             }
-            //ad.Images = inputModel.Images.f;
-
 
             this.db.NewsAd.Add(ad);
         }
