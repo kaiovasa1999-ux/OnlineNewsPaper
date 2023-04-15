@@ -1,4 +1,5 @@
 ﻿using OnlineNewsPaper.Data;
+using OnlineNewsPaper.Data.Models;
 
 namespace OnlineNewsPaper.Services.Images
 {
@@ -10,10 +11,13 @@ namespace OnlineNewsPaper.Services.Images
         {
             this.db = db;
         }
-        public void AddImgToNewsAd(Guid id)
+        public async Task SaveCreatedImageAsync(Image input)
         {
-            //this.db.Images.add
-            //throw new NotImplementedException();
+            Image image = new Image();
+            image.Id = input.Id.ToString();
+            image.NewsAdId = input.NewsAdId;
+            db.Images.Add(image);
+            await db.SaveChangesAsync();
         }
     }
 }

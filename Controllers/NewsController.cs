@@ -18,26 +18,27 @@ namespace OnlineNewsPaper.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<ActionResult> Create()
         {
             var data = await service.GetNewsCategories();
             var viewModel = new CreateNewsAdInputModel();
             viewModel.NewsCategories = data.NewsCategories;
-            viewModel.SpecificCategories = service.GetSpecificCategories(DefaultCategoryId);
+            viewModel.SpecificCategories = await service.GetSpecificCategories(DefaultCategoryId);
 
             return this.View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateNewsAdInputModel inputModel)
+        public async Task<ActionResult> Create(CreateNewsAdInputModel inputModel)
         {
             if (!this.ModelState.IsValid)
             {
-                inputModel.NewsCategories = this.service.GetMainCategories(inputModel.NewsCategoryId);
-                inputModel.SpecificCategories = this.service.GetSpecificCategories(inputModel.SpecificCategoryId);
+                inputModel.NewsCategories =await this.service.GetMainCategories(inputModel.NewsCategoryId);
+                inputModel.SpecificCategories = await this.service.GetSpecificCategories(inputModel.SpecificCategoryId);
                 return this.View(inputModel);
             }
 
+            await service.SaveToDatabaseAsync(inputModel);
 
             return RedirectToAction("Index", "Home");
         }

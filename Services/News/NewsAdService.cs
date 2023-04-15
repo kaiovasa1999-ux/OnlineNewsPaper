@@ -3,6 +3,7 @@ using OnlineNewsPaper.Data;
 using OnlineNewsPaper.Data.Models;
 using OnlineNewsPaper.Models.Home;
 using OnlineNewsPaper.Models.News;
+using OnlineNewsPaper.Services.Images;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace OnlineNewsPaper.Services.News
@@ -10,10 +11,12 @@ namespace OnlineNewsPaper.Services.News
     public class NewsAdService : INewsAdService
     {
         private readonly ApplicationDbContext db;
+        private readonly IImagesService imagesService;
 
-        public NewsAdService(ApplicationDbContext db)
+        public NewsAdService(ApplicationDbContext db, IImagesService imagesService)
         {
             this.db = db;
+            this.imagesService = imagesService;
         }
 
         public async Task<CreateNewsAdInputModel> GetNewsCategories()
@@ -50,7 +53,7 @@ namespace OnlineNewsPaper.Services.News
             return await this.db.NewsCategories.Where(c => c.Id == id).ToListAsync();
         }
 
-        public async Task CretaeAsync(CreateNewsAdInputModel inputModel)
+        public async Task SaveToDatabaseAsync(CreateNewsAdInputModel inputModel)
         {
             var adImage = new OnlineNewsPaper.Data.Models.Image();
             var ad = new NewsAd();
@@ -67,6 +70,7 @@ namespace OnlineNewsPaper.Services.News
                 adImage.Id = fileIdAndName;
                 adImage.NewsAdId = ad.Id;
                 ad.Images.Add(adImage);
+                await imagesService.SaveCreatedImageAsync(adImage);
             }
 
             await this.db.NewsAd.AddAsync(ad);

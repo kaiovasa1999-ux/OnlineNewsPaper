@@ -14,7 +14,7 @@ namespace OnlineNewsPaper.Services.News
 
         public Task<ICollection<NewsCategory>> GetMainCategories(int id);
 
-        public void CretaeAsync(CreateNewsAdInputModel inputModel);
+        public Task SaveToDatabaseAsync(CreateNewsAdInputModel inputModel);
         
     }
 }

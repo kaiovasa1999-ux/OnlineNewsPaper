@@ -1,7 +1,9 @@
-﻿namespace OnlineNewsPaper.Services.Images
+﻿using OnlineNewsPaper.Data.Models;
+
+namespace OnlineNewsPaper.Services.Images
 {
     public interface IImagesService
     {
-        public void AddImgToNewsAd(Guid id);
+        public Task SaveCreatedImageAsync(Image input);
     }
 }
