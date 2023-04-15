@@ -3,6 +3,7 @@ using OnlineNewsPaper.Data;
 using OnlineNewsPaper.Data.Models;
 using OnlineNewsPaper.Models.Home;
 using OnlineNewsPaper.Models.News;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace OnlineNewsPaper.Services.News
 {
@@ -51,6 +52,7 @@ namespace OnlineNewsPaper.Services.News
 
         public void Cretae(CreateNewsAdInputModel inputModel)
         {
+         
             var ad = new NewsAd();
             ad.CDate = DateTime.Now;
             ad.Title = inputModel.Title;
@@ -59,6 +61,12 @@ namespace OnlineNewsPaper.Services.News
             ad.SpecificCategoryId = inputModel.SpecificCategoryId;
             ad.Views = 0;
             ad.Comments = new List<Comment>();
+            foreach (var img in inputModel.Images)
+            {
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(img.FileName);
+                //ad.Images.Add
+            }
+            //ad.Images = inputModel.Images.f;
 
 
             this.db.NewsAd.Add(ad);

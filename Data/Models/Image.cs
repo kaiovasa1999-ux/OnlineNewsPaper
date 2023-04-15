@@ -8,14 +8,6 @@
         }
         public string Id { get; set; }
 
-        public int ApplicationUserID { get; set; }
-
-        public ApplicationUser User { get; set; }
-
-        public string Extension { get; set; }
-
         public int NewsAdId { get; set; }
-        
-        public NewsAd NewsAd { get; set; }
     }
 }

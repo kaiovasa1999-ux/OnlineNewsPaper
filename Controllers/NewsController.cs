@@ -37,6 +37,8 @@ namespace OnlineNewsPaper.Controllers
                 inputModel.SpecificCategories = this.service.GetSpecificCategories(inputModel.SpecificCategoryId);
                 return this.View(inputModel);
             }
+
+
             return RedirectToAction("Index", "Home");
         }
 
