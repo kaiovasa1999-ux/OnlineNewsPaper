@@ -3,8 +3,7 @@ using OnlineNewsPaper.Models.News;
 using OnlineNewsPaper.Services.News;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
-
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineNewsPaper.Controllers
 {
@@ -23,20 +22,14 @@ namespace OnlineNewsPaper.Controllers
             var data = await service.GetNewsCategories();
             var viewModel = new CreateNewsAdInputModel();
             viewModel.NewsCategories = data.NewsCategories;
-            viewModel.SpecificCategories = await service.GetSpecificCategories(DefaultCategoryId);
 
             return this.View(viewModel);
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> Create(CreateNewsAdInputModel inputModel)
         {
-            if (!this.ModelState.IsValid)
-            {
-                inputModel.NewsCategories =await this.service.GetMainCategories(inputModel.NewsCategoryId);
-                inputModel.SpecificCategories = await this.service.GetSpecificCategories(inputModel.SpecificCategoryId);
-                return this.View(inputModel);
-            }
 
             await service.SaveToDatabaseAsync(inputModel);
 
@@ -46,7 +39,7 @@ namespace OnlineNewsPaper.Controllers
         [Route("/News/Create/GetSpecificCategoriesJSON/{mainCategorId}")]
         public JsonResult GetSpecificCategoriesJSON(int mainCategorId)
         {
-            
+
             var items = service.RetunSpecificCategoriesJSON(mainCategorId);
             var res = JsonConvert.SerializeObject(items);
             return Json(res);

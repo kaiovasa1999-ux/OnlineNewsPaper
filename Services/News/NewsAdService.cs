@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using OnlineNewsPaper.Data;
 using OnlineNewsPaper.Data.Models;
 using OnlineNewsPaper.Models.Home;
 using OnlineNewsPaper.Models.News;
 using OnlineNewsPaper.Services.Images;
 using static System.Net.Mime.MediaTypeNames;
+using Image = OnlineNewsPaper.Data.Models.Image;
 
 namespace OnlineNewsPaper.Services.News
 {
@@ -55,7 +57,7 @@ namespace OnlineNewsPaper.Services.News
 
         public async Task SaveToDatabaseAsync(CreateNewsAdInputModel inputModel)
         {
-            var adImage = new OnlineNewsPaper.Data.Models.Image();
+            var adImage = new Image();
             var ad = new NewsAd();
 
             ad.CDate = DateTime.Now;
@@ -63,7 +65,8 @@ namespace OnlineNewsPaper.Services.News
             ad.Description = inputModel.Description;
             ad.NewsCategoryId = inputModel.NewsCategoryId;
             ad.SpecificCategoryId = inputModel.SpecificCategoryId;
-            ad.Comments = new List<Comment>();
+            await this.db.NewsAd.AddAsync(ad);
+            await this.db.SaveChangesAsync();
             foreach (var img in inputModel.Images)
             {
                 var fileIdAndName = Guid.NewGuid().ToString() + '/' + Path.GetExtension(img.FileName);
@@ -72,9 +75,6 @@ namespace OnlineNewsPaper.Services.News
                 ad.Images.Add(adImage);
                 await imagesService.SaveCreatedImageAsync(adImage);
             }
-
-            await this.db.NewsAd.AddAsync(ad);
-            await this.db.SaveChangesAsync();
         }
     }
 }
